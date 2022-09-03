@@ -1,0 +1,99 @@
+openapi: 3.0.0
+info:
+  title: Gordian API
+  description: This is a simple API for the Gordian backend
+  contact:
+    email: you@your-company.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/BRICHETT13/Gordian/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: developers
+  description: Operations available to regular developers
+paths:
+  /import-csv-file:
+    post:
+      summary: Upload a raw CSV file to the server.
+      operationId: upload_csv
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "201":
+          description: item created
+        "400":
+          description: "invalid input, object invalid"
+        "409":
+          description: an existing item already exists
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+  # /import-json-file:
+  #   post:
+  #     summary: Upload a raw JSON file to the server. JSONL format should also be supported
+  #     operationId: upload_json
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/something'
+  #     responses:
+  #       "201":
+  #         description: item created
+  #       "400":
+  #         description: "invalid input, object invalid"
+  #       "409":
+  #         description: an existing item already exists
+  #     x-openapi-router-controller: swagger_server.controllers.default_controller
+  /import-data-mapping:
+    post:
+      summary: Upload the data array for a submitted & validated file to the server
+        after data import wizard flow is complete
+      description: Adds an array of data (e.g. the Data<T> type within react-spreadsheet-import)
+        to the system
+      operationId: upload_data
+      requestBody:
+        description: Inventory item to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataImport'
+      responses:
+        "201":
+          description: item created
+        "400":
+          description: "invalid input, object invalid"
+        "409":
+          description: an existing item already exists
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+components:
+  schemas:
+    DataImport:
+      required:
+      - data
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+          example: Tweet ID
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataImport_data'
+    DataImport_data:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: object
+      example: null
+
