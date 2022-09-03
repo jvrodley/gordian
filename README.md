@@ -1,7 +1,9 @@
 # Gordian
 
 ## Team Members
-This section is a list of team members, and possibly links to GitHub/GitLab/LinkedIn/personal blog pages for members.
+BUTTS
+RWILLETT
+T-REX
 
 ## Tool Description
 This sections discusses the purpose and motivation for the tool, and how it addresses a tool need you've identified.
