@@ -1,9 +1,10 @@
 # Gordian
 
 ## Team Members
-BUTTS
-RWILLETT
-T-REX
+- BUTTS
+- RWILLETT
+- T-REX
+
 
 ## Tool Description
 This sections discusses the purpose and motivation for the tool, and how it addresses a tool need you've identified.
