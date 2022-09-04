@@ -1,0 +1,72 @@
+{
+  "name": "bubblesweb",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start-api": "node_modules/.bin/supervisor api-server",
+    "start-queue": "node_modules/.bin/supervisor queue-server",
+    "start-ws": "node_modules/.bin/supervisor ws-server",
+    "coverage": "node_modules/.bin/nyc -x **/javascripts/** --reporter=lcov npm run test ",
+    "coverage_without_servers": "node_modules/.bin/nyc -x **/javascripts/** --reporter=lcov npm run tests_without_servers ",
+    "localcoverage": "node_modules/.bin/nyc -x **/javascripts/** --reporter=html npm run test ",
+    "test": "node_modules/.bin/mocha --timeout 10000  --exit __tests__/*.js",
+    "tests_without_servers": "node_modules/.bin/mocha --timeout 10000  --exit __tests_without_servers__/*.js",
+    "tests_with_servers": "node_modules/.bin/mocha --timeout 10000  --exit __tests_with_servers__/*.js"
+  },
+  "dependencies": {
+    "@databases/pg": "^5.0.0",
+    "@sendgrid/mail": "^7.4.2",
+    "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "~1.16.0",
+    "connect-redis": "^5.0.0",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
+    "debug": "~2.6.0",
+    "diskspace": "*",
+    "express": "~4.14.1",
+    "express-fileupload": "^1.2.1",
+    "express-session": "^1.17.1",
+    "js-htmlencode": "0.3.0",
+    "jsonwebtoken": "^7.4.1",
+    "moment": "2.8.4",
+    "moment-timezone": "*",
+    "mongoose": "^4.8.5",
+    "morgan": "~1.7.0",
+    "mysql": "*",
+    "nodejs-websocket": "^1.7.2",
+    "pg": "^8.5.1",
+    "pug": "*",
+    "q": "*",
+    "redis": "^3.0.2",
+    "roarr": "^7.12.0",
+    "serve-favicon": "~2.3.2",
+    "socket.io": "^2.1.0",
+    "sprintf-js": "~1.0.3",
+    "stompit": "^1.0.0",
+    "supervisor": "0.12.0",
+    "uuid": "^8.3.1",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "chai": "^4.3.0",
+    "eslint": "^4.16.0",
+    "mocha": "^8.2.1",
+    "mochawesome": "*",
+    "nyc": "*",
+    "should": "~11.2.1",
+    "supertest": "^6.1.3"
+  },
+  "nyc": {
+    "all": true,
+    "instrument": true,
+    "include": [
+      "**/routes/*.js"
+    ],
+    "reporter": [
+      "html",
+      "text-summary"
+    ],
+    "report-dir": "coverage"
+  }
+}

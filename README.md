@@ -1,9 +1,9 @@
-# Gordian
+# Gordian - Untangling the Gordian knot of OSint
 
 ## Team Members
-- BUTTS
-- RWILLETT
-- T-REX
+- Eric (aka BUTTS)
+- Ryan Willett (aka RWILLETT)
+- John Rodley (aka T-REX)
 
 
 ## Tool Description
