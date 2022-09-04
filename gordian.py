@@ -28,16 +28,33 @@ def main():
     )
 
     parser.add_argument(
-        "--g",
-        help=("Specifies whether a graph be saved")
+        "--min_deg",
+        type = int,
+        help=("The output format to save the output files in.")
     )
+
+    parser.add_argument(
+        "--max_deg",
+        type = int,
+        help=("The output format to save the output files in.")
+    )
+
+    # parser.add_argument(
+    #     "--g",
+    #     help=("Specifies whether a graph be saved")
+    # )
 
     args = parser.parse_args()
 
     file_ext = args.filepath.split('.')[-1]
 
+    min_deg = args.min_deg
+    max_deg = args.max_deg
+
+    print(min_deg, max_deg)
+
     if file_ext.lower() not in ['gml', 'gephi']:
-        dgp = DocumentGraphProcessing(args.filepath, source=args.s, sink=args.t)
+        dgp = DocumentGraphProcessing(args.filepath, source=args.s, sink=args.t, min_deg = min_deg, max_deg = max_deg)
         print(dgp.n_nodes)
     else: 
         dgp = DocumentGraphProcessing(args.filepath)
@@ -53,6 +70,13 @@ def main():
         }
 
     save_func[args.of.lower()](f'./export/testing.{args.of.lower()}')
+
+    if (min_deg is not None) and (max_deg is not None):
+
+        dgp.save_graph('graph_test', scope='subgraph')
+
+    else: 
+        dgp.save_graph('graph_test', scope='subgraph')
 
 if __name__ == "__main__":
     main()
