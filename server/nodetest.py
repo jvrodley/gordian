@@ -3,13 +3,10 @@ import logging
 import time
 import traceback
 import os
-
+import sys
 
 import document_processing as dp
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
-    logging.info("Starting sense-python")
-    x = dp.DocumentGraphProcessing("./tweets.csv", 'handle', 'original_author')
-    logging.info(x.EDGELIST)
+    print(dp.DocumentGraphProcessing(sys.argv[1], 'handle', 'original_author').EDGELIST.to_dict(orient='record'))
 
