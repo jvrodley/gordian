@@ -37,12 +37,14 @@ class DocumentGraphProcessing:
             else:
                 self.df_to_edgelist()
                 self.build_graph()
-#                 print('test')
         
         if self.g is not None:
             self.n_nodes = len(self.g.nodes)
-            
-        self.calculate_centrality()
+        
+        try:
+            self.calculate_centrality()
+        except: 
+            pass
     
     def read_csv(self, sep = ","):
         return pd.read_csv(self.FILEPATH)
@@ -64,7 +66,18 @@ class DocumentGraphProcessing:
         
         self.EDGELIST = pd.DataFrame([tuple(i.replace(" {'value':", ",").replace('}', '').split(',')) for i in nx.generate_edgelist(self.g)], columns = ['source' ,'sink'])
     
-    
+    # def df_to_edgelist(self): 
+    #     # Add line to convert '' to na for dropping
+    #     df_sub = self.df.dropna(subset = [self.source_col, self.sink_col])
+
+    #     source = df_sub[self.source_col]
+    #     sink = df_sub[self.sink_col]
+    #     self.all_edges = [e for e in list(zip(source, sink))]
+    #     self.all_nodes = [l for l in list(set(source) | set(sink))]
+
+    #     self.EDGELIST = pd.DataFrame(self.all_edges, columns = [self.source_col, self.sink_col])
+
+
     def df_to_edgelist(self): 
         # Add line to convert '' to na for dropping
         df_sub = self.df.dropna(subset = [self.source_col, self.sink_col])
@@ -73,7 +86,20 @@ class DocumentGraphProcessing:
         sink = df_sub[self.sink_col]
         self.all_edges = [e for e in list(zip(source, sink))]
         self.all_nodes = [l for l in list(set(source) | set(sink))]
-    
+
+        self.EDGELIST = pd.DataFrame(self.all_edges, columns = [self.source_col, self.sink_col])
+
+
+        source_node_cols = [self.source_col] + [col for col in self.df.columns if (col != self.source_col) and (col != self.sink_col)]
+        sink_node_cols = [self.sink_col] + [col for col in self.df.columns if (col != self.source_col) and (col != self.sink_col)]
+
+        nodelist_df = pd.concat([
+            df_sub[source_node_cols].rename(columns = {'handle': 'node_name'}),
+            df_sub[sink_node_cols].rename(columns = {'original_author': 'node_name'})
+        ])
+
+        self.NODELIST = nodelist_df.drop_duplicates(subset = ['node_name'])
+
     def build_graph(self): 
         self.g = nx.Graph()
 
@@ -83,7 +109,8 @@ class DocumentGraphProcessing:
         return None
     
     def write_csv(self, sep = ","):
-        pass
+        self.EDGELIST.to_csv('./test_el.csv', index=None)
+        self.NODELIST.to_csv('./test_nl.csv', index=None)
     
     def write_excel(self): 
         pass
