@@ -109,7 +109,8 @@ class DocumentGraphProcessing:
         return None
     
     def write_csv(self, sep = ","):
-        pass
+        self.EDGELIST.to_csv('./test_el.csv', index=None)
+        self.NODELIST.to_csv('./test_nl.csv', index=None)
     
     def write_excel(self): 
         pass
