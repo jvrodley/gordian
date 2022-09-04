@@ -3,6 +3,7 @@ import pandas as pd
 import networkx as nx
 import re
 import json
+import matplotlib.pyplot as plt
 
 class DocumentGraphProcessing:
     
@@ -98,7 +99,7 @@ class DocumentGraphProcessing:
     
         return None
     
-    def write_csv(self, filename,sep = ","):
+    def write_csv(self, filename, sep = ","):
         self.EDGELIST.to_csv(f'./{filename}_el.csv', index=None, sep = sep)
         self.NODELIST.to_csv(f'./{filename}_nl.csv', index=None, sep = sep)
     
@@ -161,3 +162,7 @@ class DocumentGraphProcessing:
         plt.figure(3,figsize=(12,12)) 
         nx.draw_kamada_kawai(g)
     
+    def save_graph(self, filename, scope = 'full'):
+
+        self.draw(scope = scope)
+        plt.savefig(f'./export/{filename}.png')
