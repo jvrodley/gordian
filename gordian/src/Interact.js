@@ -29,10 +29,13 @@ import {
     TableRow,
     TextInput,
     TableCell,
+    Select,
+    Grid,
+    Box,
     Form
 } from 'grommet'
 
-import RenderFormActions from "./FormActions";
+import RenderInteractionFormActions from "./InteractionFormActions";
 
 
 // copyright and license inspection - no issues 4/13/22
@@ -78,27 +81,92 @@ function RenderInteract (props) {
         }
     }
 
+    async function applyChanges1() {
+        let source = "original_author"
+        let target = "handle"
+        let outputformat = "gephi"
+
+        let url = 'http://localhost:4001/api/healthcheck/graph?filename=' + props.filename + '&source='+source+'&target='+target+'&outputformat='+outputformat+'&mindeg=1&maxdeg=2'
+        console.log("url = " + url)
+        const response = await fetch(url);
+        if (response.ok) {
+//            log.trace("getSite awaiting site")
+            let x = await response.json();
+            console.log("applyChanges Got " + JSON.stringify(x));
+            props.setEdgesFromChild(x)
+        } else {
+            console.log("applyChanges error " + response.status)
+        }
+    }
+
+
     function resetChanges() {
     }
 
     function defaultsAction() {
     }
 
+    function setSelectedOutputFormat(option) {
+        console.log("selected output format  " + option)
+    }
+
+    let stage_options = [
+        'csv',
+        'xlsx',
+        'xls',
+        'json',
+        'gephi',
+        'gml'
+
+    ]
+
     let nute_rows = getEdges()
-    let ret = <div>
+
+    let ret = <div className={"interaction-form"}>
         <Form>
 
-        <div><RenderFormActions station={props.station} applyAction={applyChanges} resetAction={resetChanges}
-                                defaultsAction={defaultsAction}
-                                resetButtonState={true}
-                                defaultsButtonState={true}
-                                applyButtonState={true}
-        />
-         </div>
-                   </Form>
+            <Table id="advanced-table">
+                <tbody>
+                <TableRow><TableCell>Output Filename</TableCell><TableCell>
+                    <TextInput placeholder='type here' value={'tweets.out'}/></TableCell></TableRow>
+                <TableRow> <TableCell colSpan={2} >
+                    <Grid
+                        justify={'center'}
+                        round={'xxsmall'}
+                        direction={'horizontal'}
+                        fill
+                        areas={[
+                            {name: 'label', start: [0, 0], end: [0, 0]},
+                            {name: 'stage', start: [1, 0], end: [1, 0]},
+                        ]}
+                        columns={['100px', '150px', '226px']}
+                        rows={['60px']}
+                        gap="xxsmall"
+                    >
+
+                        <Box justify={'center'} gridArea={'label'} width={'small'} round={'xsmall'}>
+                            Output Format
+                        </Box>
+                        <Box justify={'center'} gridArea={'stage'} width={'small'} round={'xsmall'}>
+                            <Select options={stage_options} value={'csv'}
+                                    onChange={({option}) => setSelectedOutputFormat(option)}/>
+                        </Box>
+                    </Grid>
+                </TableCell></TableRow></tbody>
+            </Table>
+
+            <div><RenderInteractionFormActions station={props.station} applyAction={applyChanges1}
+                                               resetAction={resetChanges}
+                                               defaultsAction={defaultsAction}
+                                               resetButtonState={true}
+                                               defaultsButtonState={true}
+                                               applyButtonState={true}
+            />
+            </div>
+        </Form>
 
 
-        <hr />
+        <hr/>
         <div className="edge-list">
             <Table id="settings-tab">
                 <tbody>
