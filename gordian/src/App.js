@@ -9,21 +9,16 @@ import './App.css';
 
 function App() {
     const [pageNumber, setPageNumber] = useState(0);
+    const [edges, setEdges] = useState([])
+    const [filename, setFname] = useState()
 
-    let station = {
-        dispensers: [
-            {
-                dispenser_name: "dispenser1",
-                index: 5,
-                deviceid_device: 1,
-                manufacturer_name: "GH",
-                bcm_pin_number: 2,
-                milliliters_per_millisecond: 25,
-                dispenserid: 1,
-                dispenseml: 0.5,
-                onoff: false
-            }
-        ]
+    function setFilename(name) {
+        console.log("Got filename " + name)
+        setFname(name)
+        setPageNumber(2)
+    }
+    function setEdgesFromChild(ed) {
+        setEdges(ed)
     }
 
     /**
@@ -59,12 +54,12 @@ function App() {
         );
     } else if (pageNumber === 1) {
         return (
-            <MyDropzone setPageNumber={setPageNumber}/>
+            <MyDropzone setFilename={setFilename}/>
         );
     } else if (pageNumber === 2) {
         {
             return (
-                <RenderInteract station={station} setPageNumber={setPageNumber}/>
+                <RenderInteract filename={filename} edges={edges} setEdgesFromChild={setEdgesFromChild} setPageNumber={setPageNumber}/>
             );
         }
     }
