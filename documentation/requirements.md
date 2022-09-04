@@ -14,3 +14,24 @@ For common or standardized data models in social network research (e.g. Twitter 
 6. (Optional) User is shown a view with details of the configuration they’ve specified and asked to review it one last time before finishing.
 7. The complete data from the input file is mapped and uploaded into the backend data storage mechanism.
 8. User is shown a view confirming the success of the upload process and a link to view the resulting network.
+
+
+
+...
+???
+...
+11. Input is given to `document_processing.py` that specifies <`TEMP FILEPATH - SUGGEST CHANGING?`>, source column, and target column. Output:
+    - Nodelist table
+    - Edgelist table 
+    - Network metrics table (e.g. centrality measures, betweenness scores)
+    - A network graph data structure
+12. ????
+13. ????
+14. User chooses command to export the processed network data. For each output from #11, the user can select to export to one of the following file formats:
+    - CSV
+    - Excel
+    - JSON
+    - (JSONL?)
+    - .gephi
+    - .gml
+    Output: a file of the processed data in the specified filetype. 
