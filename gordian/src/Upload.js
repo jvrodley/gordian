@@ -2,7 +2,8 @@ import React from 'react';
 import {useMemo} from 'react'
 import {useDropzone} from 'react-dropzone';
 import RenderFormActions from "./FormActions";
-
+import {Button} from 'grommet'
+import './App.css';
 
 const baseStyle = {
   flex: 1,
@@ -65,16 +66,15 @@ function MyDropzone(props) {
     }
 
     return (
-        <div className="container">
+        <div className="File-uploader">
             <div {...getRootProps({className: 'dropzone'})}>
                 <input {...getInputProps()} />
                 <p>Drag 'n' drop some files here</p>
-                <button type="button" onClick={open}>
-                    Open File Dialog
-                </button>
+                 <Button color={'var(--color-button-border)'} width={'medium'} round={'large'} active={true}
+                                 label={'Open File Dialog'} onClick={open} />
             </div>
             <aside>
-                <h4>Files</h4>
+                <h4>File selected</h4>
                 <ul>{files}</ul>
             </aside>
             <RenderFormActions station={station} applyAction={action} resetAction={action}

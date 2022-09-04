@@ -28,7 +28,8 @@ import {
     Table,
     TableRow,
     TextInput,
-    TableCell
+    TableCell,
+    Form
 } from 'grommet'
 
 import RenderFormActions from "./FormActions";
@@ -44,18 +45,18 @@ function RenderInteract (props) {
 
     console.log("RenderNutesTabFunctional")
 
-       useEffect(() => {
+    useEffect(() => {
         const fetchData = async () => {
             applyChanges()
         }
         fetchData();
-    },[]);    // eslint-disable-line react-hooks/exhaustive-deps
+    }, []);    // eslint-disable-line react-hooks/exhaustive-deps
 
-     function getEdge(row, index, arr) {
+    function getEdge(row, index, arr) {
         return <TableRow key={index}>
             <TableCell>{row.handle}</TableCell>
             <TableCell>{row.original_author}</TableCell>
-         </TableRow>
+        </TableRow>
     }
 
     function getEdges() {
@@ -65,14 +66,14 @@ function RenderInteract (props) {
     }
 
     async function applyChanges() {
-        let url = 'http://localhost:4001/api/healthcheck?filename='+props.filename
+        let url = 'http://localhost:4001/api/healthcheck?filename=' + props.filename
         const response = await fetch(url);
-        if(response.ok) {
+        if (response.ok) {
 //            log.trace("getSite awaiting site")
             let x = await response.json();
             console.log("applyChanges Got " + JSON.stringify(x));
             props.setEdgesFromChild(x)
-         } else {
+        } else {
             console.log("applyChanges error " + response.status)
         }
     }
@@ -84,29 +85,35 @@ function RenderInteract (props) {
     }
 
     let nute_rows = getEdges()
-    let ret =
-        <Grommet theme={props.theme}>
-            <div className="global_container_">
-                <Table id="settings-tab">
-                    <tbody>
+    let ret = <div>
+        <Form>
 
-                    <TableRow>
-                        <th>Handle</th>
-                        <th>Original_author</th>
-                        <th></th>
-                    </TableRow>
-                    {nute_rows}
-                    </tbody>
-                </Table>
+        <div><RenderFormActions station={props.station} applyAction={applyChanges} resetAction={resetChanges}
+                                defaultsAction={defaultsAction}
+                                resetButtonState={true}
+                                defaultsButtonState={true}
+                                applyButtonState={true}
+        />
+         </div>
+                   </Form>
 
-                <RenderFormActions station={props.station} applyAction={applyChanges} resetAction={resetChanges}
-                                   defaultsAction={defaultsAction}
-                                   resetButtonState={true}
-                                   defaultsButtonState={true}
-                                   applyButtonState={true}
-                />
-            </div>
-        </Grommet>
+
+        <hr />
+        <div className="edge-list">
+            <Table id="settings-tab">
+                <tbody>
+
+                <TableRow>
+                    <th>Handle</th>
+                    <th>Original_author</th>
+                    <th></th>
+                </TableRow>
+                {nute_rows}
+                </tbody>
+            </Table>
+
+        </div>
+    </div>
     return (ret)
 }
 
