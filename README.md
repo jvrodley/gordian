@@ -1,7 +1,10 @@
-# Gordian
+# Gordian - Untangling the Gordian knot of OSint
 
 ## Team Members
-This section is a list of team members, and possibly links to GitHub/GitLab/LinkedIn/personal blog pages for members.
+
+- Eric (aka BUTTS)
+- Ryan Willett (aka RWILLETT)
+- John Rodley (aka T-REX)
 
 ## Tool Description
 This sections discusses the purpose and motivation for the tool, and how it addresses a tool need you've identified.
