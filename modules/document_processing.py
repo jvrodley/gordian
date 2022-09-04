@@ -1,3 +1,9 @@
+import numpy as np
+import pandas as pd
+import networkx as nx
+import re
+import json
+
 class DocumentGraphProcessing:
     
     def __init__(self, filepath, source = None, sink = None):
@@ -45,7 +51,7 @@ class DocumentGraphProcessing:
         return pd.read_excel(self.FILEPATH)
     
     def read_json(self):
-        with open(fp, 'r') as f: 
+        with open(self.FILEPATH, 'r') as f: 
             d = f.read()
         
         return json.loads(d)
@@ -54,7 +60,7 @@ class DocumentGraphProcessing:
         pass
     
     def read_gml(self):
-        self.g = nx.read_gml(fp)
+        self.g = nx.read_gml(self.FILEPATH)
         
         self.EDGELIST = pd.DataFrame([tuple(i.replace(" {'value':", ",").replace('}', '').split(',')) for i in nx.generate_edgelist(self.g)], columns = ['source' ,'sink'])
     
@@ -97,7 +103,7 @@ class DocumentGraphProcessing:
         eigen = nx.eigenvector_centrality(self.g)
         cen = pd.DataFrame([deg, closeness, betweenness, eigen]).transpose()
         cen.columns = ['degree', 'closeness', 'betweenness', 'eigenvector']
-        cen['degree_nonnormal'] = cen.degree.apply(lambda x: int(round(x * p.n_nodes)))
+        cen['degree_nonnormal'] = cen.degree.apply(lambda x: int(round(x * self.n_nodes)))
         
         self.centrality = cen
     
