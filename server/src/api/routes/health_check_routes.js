@@ -47,7 +47,14 @@ function getStatus(req,res,next) {
 router.get("/", function (req, res, next) {
 
     console.log("req.query.filename = " + req.query.filename )
-    const pyProg = spawn('python', ['./nodetest.py', req.query.filename]);
+    const pyProg = spawn('python', ['./nodebridge.py', req.query.filename]);
+    let x = {}
+    donodebridge(req, res)
+
+});
+
+function donodebridge( req, res,) {
+    const pyProg = spawn('python', ['./nodebridge.py', req.query.filename]);
     let x = {}
     pyProg.stdout.on('data', function (data) {
         z = data.toString()
@@ -56,11 +63,40 @@ router.get("/", function (req, res, next) {
 //        console.log(y)
         x = JSON.parse(y)
 //        console.log(JSON.stringify(x));
-         res.status(200).json(x);
+        res.status(200).json(x);
+        console.log("Finished returning json")
+    });
+    pyProg.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`);
+    });
+    pyProg.on('close', (code) => {
+        console.log(`child process exited with code ${code}`);
+    });
+}
+
+
+router.get("/graph", function (req, res, next) {
+
+    console.log("/graph req.query.filename = " + req.query.filename )
+/*
+python gordian.py ./tweets.csv --s handle --t original_author --of csv --min_deg 1
+ */
+    const pyProg = spawn('python', ['./gordian.py',
+        req.query.filename,
+    '--s', 'handle',
+    '--t', 'original_author',
+    '--of', 'csv',
+    '--min_deg', '1'
+    ]);
+    let x = {}
+    pyProg.stdout.on('data', function (data) {
+        console.log("received data " + data)
+        donodebridge(req, res)
         console.log("Finished returning json")
    });
     pyProg.stderr.on('data', (data) => {
         console.error(`stderr: ${data}`);
+        res.status(500);
     });
     pyProg.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
@@ -69,9 +105,10 @@ router.get("/", function (req, res, next) {
 
 });
 
+
 router.post("/apply", function (req, res, next) {
 
-    const pyProg = spawn('python', ['./nodetest.py']);
+    const pyProg = spawn('python', ['./nodebridge.py']);
 
     pyProg.stdout.on('data', function (data) {
         console.log(data.toString());
