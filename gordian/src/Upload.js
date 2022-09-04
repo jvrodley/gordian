@@ -46,8 +46,7 @@ function MyDropzone(props) {
   ));
 
     function action() {
-        alert("action")
-        props.setPageNumber(2)
+        props.setFilename(acceptedFiles[0].name)
     }
 
     let station = {

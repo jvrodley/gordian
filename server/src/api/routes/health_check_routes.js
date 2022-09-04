@@ -46,21 +46,28 @@ function getStatus(req,res,next) {
 
 router.get("/", function (req, res, next) {
 
-    const pyProg = spawn('python', ['./nodetest.py']);
-
+    console.log("req.query.filename = " + req.query.filename )
+    const pyProg = spawn('python', ['./nodetest.py', req.query.filename]);
+    let x = {}
     pyProg.stdout.on('data', function (data) {
-        console.log(data.toString());
-        res.write(data);
-        res.end('end');
-    });
+        z = data.toString()
+        y = z.replaceAll("'", "\"")
+
+//        console.log(y)
+        x = JSON.parse(y)
+//        console.log(JSON.stringify(x));
+         res.status(200).json(x);
+        console.log("Finished returning json")
+   });
     pyProg.stderr.on('data', (data) => {
         console.error(`stderr: ${data}`);
     });
     pyProg.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
     });
-    getStatus(req, res, next)
-   });
+
+
+});
 
 router.post("/apply", function (req, res, next) {
 
