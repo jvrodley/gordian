@@ -23,6 +23,7 @@
 
 import {Button, Grid} from "grommet";
 import React, {useState} from "react";
+import './App.css';
 
 // copyright and license inspection - no issues 4/13/22
 
@@ -51,7 +52,7 @@ function RenderFormActions (props) {
         defaultsDisabled=true
     }
     // The color supplied to the button is the only way to make a border appear.
-    let ret = <>
+    let ret = <div className={"formactions"}>
             <Grid
                 margin={"medium"}
                 justify={'center'}
@@ -72,7 +73,7 @@ function RenderFormActions (props) {
                 <Button gridArea={'reset'} color={'var(--color-button-border)'} disabled={resetDisabled} width={'medium'} round={'large'} type={'reset'} active={props.resetButtonState} label={'Reset'} onClick={resetAction}/>
                 <Button gridArea={'defaults'} color={'var(--color-button-border)'} disabled={defaultsDisabled} width={'medium'} round={'large'} active={props.defaultsButtonState} label={'Defaults'} onClick={defaultsAction}/>
          </Grid>
-   </>
+   </div>
     return(ret);
 }
 
