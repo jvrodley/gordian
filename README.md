@@ -3,7 +3,7 @@
 ## Team Members
 
 - Eric Brichetto (aka BUTTS)
-- Ryan Willett (aka RWILLETT)
+- Ryan Willett (aka MITH)
 - John Rodley (aka T-REX)
 
 
