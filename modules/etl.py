@@ -29,23 +29,6 @@ class DocumentOpener:
         
         self.df = open_func[self.file_ext]()
         
-        # if self.file_ext not in ['gml', 'gephi']:
-        #     if (self.source_col is None) or (self.sink_col is None):
-        #         print("Enter sink and source for data processing")
-                
-        #         self.g = None
-        #     else:
-        #         self.df_to_edgelist()
-        #         self.build_graph()
-        
-        # if self.g is not None:
-        #     self.n_nodes = len(self.g.nodes)
-        
-        # try:
-        #     self.calculate_centrality()
-        # except: 
-        #     pass
-
     def read_csv(self, sep = ","):
         return pd.read_csv(self.FILEPATH)
     
@@ -68,11 +51,6 @@ class DocumentOpener:
 
         self.NODELIST = reader.NODELIST
         self.EDGELIST = reader.EDGELIST
-
-    # def read_gml(self):
-    #     self.g = nx.read_gml(self.FILEPATH)
-        
-    #     self.EDGELIST = pd.DataFrame([tuple(i.replace(" {'value':", ",").replace('}', '').split(',')) for i in nx.generate_edgelist(self.g)], columns = ['source' ,'sink'])
 
 
 class GMLReader:
