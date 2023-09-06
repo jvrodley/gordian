@@ -3,7 +3,7 @@
 ## Team Members
 
 - Eric Brichetto (aka BUTTS)
-- Ryan Willett (aka RWILLETT)
+- Ryan Willett (aka MITH)
 - John Rodley (aka T-REX)
 
 
@@ -23,21 +23,7 @@ This section includes detailed instructions for installing the tool, including a
 
         cd gordian/server
         pip install -r requirements.txt
-        npm install
 
-4. Run the tool
-        
-        ./dev_api_server
-
-## GUI Usage
-Point your browser at http://localhost:4001/index.html  
-Click on Start Untangling.  
-Click Open File Dialog
-Navigate to gordian/server
-Select tweets.csv OR tweets.xlsx
-Hit APPLY
-Note: Drag and Drop should work, but is untested
-You will see the interaction form along with the detected edge-list scrolling off the bottom
 
 ## CLI Usage
 This sections includes detailed instructions for using the tool. If the tool has a command-line interface, include common commands and arguments, and some examples of commands and a description of the expected output. If the tool has a graphical user interface or a browser interface, include screenshots and describe a common workflow.
