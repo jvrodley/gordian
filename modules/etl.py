@@ -4,12 +4,16 @@ import networkx as nx
 import re
 import json
 import matplotlib.pyplot as plt
+from .document_processing import DataFrameGraphProcessing
 
 class DocumentOpener:
 
-    def __init__(self, filepath):
+    def __init__(self, filepath, source = None, sink = None, label = None):
 
         self.FILEPATH = filepath
+        self.source_col = source
+        self.sink_col = sink
+        self.label_col = label
 
         self.detect_filetype()
 
@@ -28,6 +32,14 @@ class DocumentOpener:
         }
         
         self.df = open_func[self.file_ext]()
+
+        if self.source_col is not None and self.sink_col is not None:
+            if self.file_ext in ["csv", "xlsx"]:
+                self.df_to_edgelist(source = self.source_col, sink = self.sink_col)
+            else: 
+                pass
+        else:
+            raise Exception("Need to define a source and sink column")
         
     def read_csv(self, sep = ","):
         return pd.read_csv(self.FILEPATH)
@@ -51,6 +63,15 @@ class DocumentOpener:
 
         self.NODELIST = reader.NODELIST
         self.EDGELIST = reader.EDGELIST
+
+        return None
+    
+    def df_to_edgelist(self, source, sink):
+        processor = DataFrameGraphProcessing(data = self.df, source = source, sink=sink)
+        processor.df_to_edgelist()
+
+        self.NODELIST = processor.NODELIST
+        self.EDGELIST = processor.EDGELIST
 
 
 class GMLReader:
