@@ -17,59 +17,6 @@ class DataFrameGraphProcessing:
         self.min_deg = min_deg
         self.max_deg = max_deg
         
-        # self.detect_filetype()
-    
-    # def detect_filetype(self):
-        
-    #     self.file_ext = self.FILEPATH.split('.')[-1].lower()
-        
-    #     open_func = {
-    #         'csv': self.read_csv,
-    #         'xlsx': self.read_excel,
-    #         'xls': self.read_excel,
-    #         'json': self.read_json,
-    #         'gephi': self.read_gephi,
-    #         'gml': self.read_gml
-    #     }
-        
-    #     self.df = open_func[self.file_ext]()
-        
-    #     if self.file_ext not in ['gml', 'gephi']:
-    #         if (self.source_col is None) or (self.sink_col is None):
-    #             print("Enter sink and source for data processing")
-                
-    #             self.g = None
-    #         else:
-    #             self.df_to_edgelist()
-    #             self.build_graph()
-        
-    #     if self.g is not None:
-    #         self.n_nodes = len(self.g.nodes)
-        
-    #     try:
-    #         self.calculate_centrality()
-    #     except: 
-    #         pass
-    
-    # def read_csv(self, sep = ","):
-    #     return pd.read_csv(self.FILEPATH)
-    
-    # def read_excel(self): 
-    #     return pd.read_excel(self.FILEPATH)
-    
-    # def read_json(self):
-    #     with open(self.FILEPATH, 'r') as f: 
-    #         d = f.read()
-        
-    #     return json.loads(d)
-    
-    # def read_gephi(self):
-    #     pass
-    
-    # def read_gml(self):
-    #     self.g = nx.read_gml(self.FILEPATH)
-        
-    #     self.EDGELIST = pd.DataFrame([tuple(i.replace(" {'value':", ",").replace('}', '').split(',')) for i in nx.generate_edgelist(self.g)], columns = ['source' ,'sink'])
 
     def df_to_edgelist(self): 
         # Add line to convert '' to na for dropping
